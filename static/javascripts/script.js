@@ -1,6 +1,6 @@
 (function ($, undefined) {
 	var featured = ['CloudFlare-Tools', 'CloudFlare-CPanel', 'SortaSQL'],
-		exclude = ['circus', 'fpm'],
+		exclude = ['circus', 'fpm', 'phantomjs'],
 		customRepos = [{
 			name : 'stapxx',
 			html_url : 'http://github.com/agentzh/stapxx',
