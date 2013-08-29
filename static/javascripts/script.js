@@ -1,5 +1,5 @@
 (function ($, undefined) {
-	var featured = ['CloudFlare-Tools', 'CloudFlare-CPanel', 'SortaSQL'],
+	var featured = ['lua-nginx-module', 'stapxx', 'SortaSQL'],
 		exclude = ['circus', 'fpm', 'phantomjs'],
 		customRepos = [{
 			name : 'stapxx',
