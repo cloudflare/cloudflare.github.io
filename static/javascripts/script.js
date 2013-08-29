@@ -1,5 +1,6 @@
 (function ($, undefined) {
 	var featured = ['CloudFlare-Tools', 'CloudFlare-CPanel', 'SortaSQL'],
+		exclude = [],
 		customRepos = [{
 			name : 'stapxx',
 			html_url : 'http://github.com/agentzh/stapxx',
@@ -80,8 +81,10 @@
 				});
 
 				$.each(repos, function (i, repo) {
-					addRepo(repo);
-					if( i < 3 ) addRecentlyUpdatedRepo(repo);
+					if( exclude.indexOf(repo.name) === -1 ){
+						addRepo(repo);
+						if( i < 3 ) addRecentlyUpdatedRepo(repo);
+					}
 				});
 			}
 		});
