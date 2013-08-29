@@ -1,5 +1,5 @@
 (function ($, undefined) {
-	var featured = ['lua-nginx-module', 'stapxx', 'ngx_cache_purge'],
+	var featured = ['lua-nginx-module', 'stapxx', 'SortaSQL'],
 		exclude = ['circus', 'fpm', 'phantomjs', 'zendesk'],
 		customRepos = [{
 			name : 'stapxx',
@@ -9,7 +9,7 @@
 		},{
 			name : 'nginx-systemtap-toolkit',
 			html_url : 'http://github.com/agentzh/nginx-systemtap-toolkit',
-			language : 'Perl',
+			language : 'Perl',s
 			description : 'Real-time analyzing and diagnosing tools for Nginx based on SystemTap'
 		},{
 			name : 'lua-nginx-module',
