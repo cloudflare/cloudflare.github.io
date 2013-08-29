@@ -62,6 +62,14 @@
 		var uri = 'https://api.github.com/orgs/cloudflare/repos?callback=?' + '&per_page=100' + '&page='+page;
 
 		$.getJSON(uri, function (result) {
+			// API Rate limiting catch
+			if( result.data && result.data.message ){
+				$('<p class="text-error">')
+					.text('Your IP has hit github\'s rate limit per hour.')
+					.appendTo('.hero-block');
+				return;
+			}
+
 			repos = repos.concat(result.data);
 			if( result.data && result.data.length == 100 ){
 				addRepos(repos, page + 1);
@@ -102,6 +110,9 @@
 
 	function addMembers(){
 		$.getJSON('https://api.github.com/orgs/cloudflare/members?callback=?', function (result) {
+			// API Rate limiting catch
+			if( result.data && results.data.message ){ return; }
+
 			var members = result.data;
 			$('#member-count').text(members.length).removeClass('loading');
 			$.each( members, function(idx, member){ addMember( member ); });
