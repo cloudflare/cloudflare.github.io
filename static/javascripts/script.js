@@ -111,7 +111,7 @@
 	function addMembers(){
 		$.getJSON('https://api.github.com/orgs/cloudflare/members?callback=?', function (result) {
 			// API Rate limiting catch
-			if( result.data && results.data.message ){ return; }
+			if( result.data && result.data.message ){ return; }
 
 			var members = result.data;
 			$('#member-count').text(members.length).removeClass('loading');
