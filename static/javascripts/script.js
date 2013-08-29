@@ -9,7 +9,7 @@
 		},{
 			name : 'nginx-systemtap-toolkit',
 			html_url : 'http://github.com/agentzh/nginx-systemtap-toolkit',
-			language : 'Perl',s
+			language : 'Perl',
 			description : 'Real-time analyzing and diagnosing tools for Nginx based on SystemTap'
 		},{
 			name : 'lua-nginx-module',
