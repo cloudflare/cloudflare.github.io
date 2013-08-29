@@ -1,5 +1,26 @@
 (function ($, undefined) {
 	var featured = ['CloudFlare-Tools', 'CloudFlare-CPanel', 'SortaSQL'],
+		customRepos = [{
+			name : 'stapxx',
+			html_url : 'http://github.com/agentzh/stapxx',
+			language : 'Perl',
+			description : 'Simple macro language extentions to systemtap'
+		},{
+			name : 'nginx-systemtap-toolkit',
+			html_url : 'http://github.com/agentzh/nginx-systemtap-toolkit',
+			language : 'Perl',
+			description : 'Real-time analyzing and diagnosing tools for Nginx based on SystemTap'
+		},{
+			name : 'lua-nginx-module',
+			html_url : 'https://github.com/chaoslawful/lua-nginx-module',
+			language : 'Perl',
+			description : 'Embed the Power of Lua into NginX'
+		},{
+			name : 'ngx_cache_purge',
+			html_url : 'https://github.com/FRiCKLE/ngx_cache_purge',
+			language : 'C',
+			description : 'nginx module which adds ability to purge content from FastCGI, proxy, SCGI and uWSGI caches.'
+		}],
 		num = 0;
 
 	function addRecentlyUpdatedRepo(repo) {
@@ -47,7 +68,7 @@
 				$('#repo-count').text(repos.length).removeClass('loading');
 				// Convert pushed_at to Date.
 				$.each(repos, function (i, repo) {
-					repo.pushed_at = new Date(repo.pushed_at);
+					repo.pushed_at = new Date(repo.pushed_at || null);
 				});
 
 				// Sort by most-recently pushed to.
@@ -60,7 +81,7 @@
 
 				$.each(repos, function (i, repo) {
 					addRepo(repo);
-					if( i < 4 ) addRecentlyUpdatedRepo(repo);
+					if( i < 3 ) addRecentlyUpdatedRepo(repo);
 				});
 			}
 		});
@@ -84,7 +105,7 @@
 		});
 	}
 
-	addRepos();
+	addRepos(customRepos);
 	addMembers();
 
 	$('#activate-mobile-menu').on('click', function( evt ){
