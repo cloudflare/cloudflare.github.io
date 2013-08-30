@@ -74,6 +74,9 @@
 			if( result.data && result.data.length == 100 ){
 				addRepos(repos, page + 1);
 			}else{
+				repos = $.grep(repos, function(value) {
+					return exclude.indexOf(value.name) === -1;
+				});
 				$('#repo-count').text(repos.length).removeClass('loading');
 				// Convert pushed_at to Date.
 				$.each(repos, function (i, repo) {
@@ -89,10 +92,8 @@
 				});
 
 				$.each(repos, function (i, repo) {
-					if( exclude.indexOf(repo.name) === -1 ){
-						addRepo(repo);
-						if( i < 3 ) addRecentlyUpdatedRepo(repo);
-					}
+					addRepo(repo);
+					if( i < 3 ) addRecentlyUpdatedRepo(repo);
 				});
 			}
 		});
