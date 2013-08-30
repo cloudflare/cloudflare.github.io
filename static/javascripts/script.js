@@ -1,6 +1,6 @@
 (function ($, undefined) {
 	var featured = ['lua-nginx-module', 'stapxx', 'SortaSQL'],
-		exclude = ['circus', 'fpm', 'phantomjs', 'zendesk'],
+		exclude = ['circus', 'fpm', 'phantomjs', 'zendesk', 'raven-php', 'jas', 'twemcache', 'cloudflare.github.io'],
 		customRepos = [{
 			name : 'stapxx',
 			html_url : 'http://github.com/agentzh/stapxx',
