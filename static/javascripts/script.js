@@ -14,7 +14,7 @@
 		},{
 			name : 'lua-nginx-module',
 			html_url : 'https://github.com/chaoslawful/lua-nginx-module',
-			language : 'Perl',
+			language : 'C',
 			description : 'Embed the Power of Lua into NginX'
 		},{
 			name : 'ngx_cache_purge',
