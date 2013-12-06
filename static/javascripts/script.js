@@ -1,5 +1,5 @@
 (function ($, undefined) {
-	var featured = ['lua-nginx-module', 'stapxx', 'SortaSQL'],
+	var featured = ['lua-nginx-module', 'stapxx', 'redoctober'],
 		exclude = ['circus', 'fpm', 'phantomjs', 'zendesk', 'raven-php', 'go-raft', 'jas', 'twemcache', 'CloudFlare-UI', 'cloudflarejs','cloudflare.github.io'],
 		customRepos = [{
 			name : 'stapxx',
