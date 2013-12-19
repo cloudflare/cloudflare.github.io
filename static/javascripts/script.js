@@ -22,6 +22,26 @@
 			language : 'C',
 			description : 'nginx module which adds ability to purge content from FastCGI, proxy, SCGI and uWSGI caches.'
 		}],
+		categories = {
+			'JavaScript': {},
+			'Go': {
+				'golibs' : null
+			},
+			'Nginx and Lua': {
+				'lua-nginx-module' : null,
+				'lua-nginx-cache-module': null,
+				'nginx-systemtap-toolkit': null,
+				'ngx_cache_purge': null,
+				'lua-cmsgpack': null,
+				'lua-resty-logger-socket' : null,
+				'lua-resty-cookie': null
+			},
+			'Postgres': {
+				'kt_fdw': null,
+				'SortaSQL': null
+			},
+			'Other': {}
+		},
 		num = 0;
 
 	function addRecentlyUpdatedRepo(repo) {
@@ -40,7 +60,7 @@
 		$('#recently-updated').removeClass('loading').append($item);
 	}
 
-	function addRepo(repo) {
+	function addRepo(repo, $container) {
 		var $item = $('<div>').addClass('column');
 		var $link = $('<a>').attr('href', repo.html_url).appendTo($item);
 		$link.addClass('repo lang-'+ (repo.language || '').toLowerCase().replace(/[\+#]/gi, '') );
@@ -48,12 +68,29 @@
 		$link.append($('<h5 class="repo-lang">').text(repo.language || ''));
 		$link.append($('<p class="repo-desc">').text(repo.description || ''));
 
-		if( featured.indexOf(repo.name) > -1 ){
+		/*if( featured.indexOf(repo.name) > -1 ){
 			$link.addClass('featured'+(++num));
 			$item.prependTo('#repos');
-		}else{
-			$item.appendTo('#repos');
-		}
+		}else{*/
+		$item.appendTo($container);
+		//}
+	}
+
+	function addCategory(cat, repos){
+		var $section = $('<section id="cat-'+cat+'" />').appendTo('#repos'), $container;
+		$section.append($('<h2 />',{'class': 'subheadline', 'text': cat}));
+		$container = $('<div class="repos section columns three" />').appendTo($section);
+
+		$('#category-shortcuts').append($('<a />', {
+			href: '#cat-'+cat,
+			text: cat
+		}))
+
+		$.each(repos, function(i, repo){
+			if( repo !== null ){
+				addRepo(repo, $container);
+			}
+		});
 	}
 
 	function addRepos(repos, page) {
@@ -74,10 +111,33 @@
 			if( result.data && result.data.length == 100 ){
 				addRepos(repos, page + 1);
 			}else{
+				//
 				repos = $.grep(repos, function(value) {
-					return exclude.indexOf(value.name) === -1;
+					var keep = exclude.indexOf(value.name) === -1,
+						found = false;
+
+					// Build up the categories while we're looping through
+					if( keep ){
+						$.each(categories, function(key, items){
+							if( value.name in items ){
+								found = true;
+								items[value.name] = value;
+								return false;
+							}else if( value.language == key || (key === 'Nginx and Lua' && value.language === 'Lua') ){
+								found = true;
+								categories[key][value.name] = value;
+							}
+						});
+
+						if( !found ){
+							categories.Other[value.name] = value;
+						}
+					}
+
+					return keep;
 				});
-				$('#repo-count').text(repos.length).removeClass('loading');
+
+				$('#repo-headline').hide();//text(repos.length).removeClass('loading');
 				// Convert pushed_at to Date.
 				$.each(repos, function (i, repo) {
 					repo.pushed_at = new Date(repo.pushed_at || null);
@@ -91,9 +151,12 @@
 					return 0;
 				});
 
-				$.each(repos, function (i, repo) {
-					addRepo(repo);
-					if( i < 3 ) addRecentlyUpdatedRepo(repo);
+				$.each(repos.slice(0, 3), function (i, repo) {
+					addRecentlyUpdatedRepo(repo);
+				});
+
+				$.each(categories, function (cat, repos){
+					addCategory(cat, repos);
 				});
 			}
 		});
