@@ -52,10 +52,10 @@
 		var $time = $('<a>').attr('href', repo.html_url + '/commits').text( repo.pushed_at.toDateString() );
 		$item.append($('<span>').addClass('time').append($time));
 		$item.append('<span class="bullet">&sdot;</span>');
-		var $watchers = $('<a>').attr('href', repo.html_url + '/watchers').text(repo.watchers + ' stargazers');
+		var $watchers = $('<a>').attr('href', repo.html_url + '/watchers').text(repo.watchers + (repo.watchers === 1 ? ' stargazer' : ' stargazers'));
 		$item.append($('<span>').addClass('watchers').append($watchers));
 		$item.append('<span class="bullet">&sdot;</span>');
-		var $forks = $('<a>').attr('href', repo.html_url + '/network').text(repo.forks + ' forks');
+		var $forks = $('<a>').attr('href', repo.html_url + '/network').text(repo.forks + (repo.forks === 1 ? ' fork' : ' forks'));
 		$item.append($('<span>').addClass('forks').append($forks));
 		$('#recently-updated').removeClass('loading').append($item);
 	}
