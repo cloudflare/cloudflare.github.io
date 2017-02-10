@@ -1,48 +1,172 @@
 (function ($, undefined) {
-	var featured = ['lua-nginx-module', 'stapxx', 'redoctober'],
-		exclude = ['circus', 'fpm', 'phantomjs', 'zendesk', 'raven-php', 'go-raft', 'jas', 'twemcache', 'CloudFlare-UI', 'cloudflarejs','cloudflare.github.io', 'instaflare', 'dnschanger_detector', 'cfapp_sample', 'cfapp-canopy'],
-		customRepos = [{
-			name : 'stapxx',
-			html_url : 'http://github.com/agentzh/stapxx',
-			language : 'Perl',
-			description : 'Simple macro language extentions to systemtap'
-		},{
-			name : 'nginx-systemtap-toolkit',
-			html_url : 'http://github.com/agentzh/nginx-systemtap-toolkit',
-			language : 'Perl',
-			description : 'Real-time analyzing and diagnosing tools for Nginx based on SystemTap'
-		},{
-			name : 'lua-nginx-module',
-			html_url : 'https://github.com/chaoslawful/lua-nginx-module',
-			language : 'C',
-			description : 'Embed the Power of Lua into NginX'
-		},{
-			name : 'ngx_cache_purge',
-			html_url : 'https://github.com/FRiCKLE/ngx_cache_purge',
-			language : 'C',
-			description : 'nginx module which adds ability to purge content from FastCGI, proxy, SCGI and uWSGI caches.'
-		}],
-		categories = {
-			'JavaScript': {},
-			'Go': {
-				'golibs' : null
-			},
-			'Nginx and Lua': {
-				'lua-nginx-module' : null,
-				'lua-nginx-cache-module': null,
-				'nginx-systemtap-toolkit': null,
-				'ngx_cache_purge': null,
-				'lua-cmsgpack': null,
-				'lua-resty-logger-socket' : null,
-				'lua-resty-cookie': null
-			},
-			'Postgres': {
-				'kt_fdw': null,
-				'SortaSQL': null
-			},
-			'Other': {}
+	// NOTE: featured repos currently not used (commented out- why?)
+	var featured = ['lua-nginx-module', 'stapxx', 'redoctober'];
+
+	// See https://wiki.cfops.it/display/PS/Open+Source for deprecation information
+	var exclude = [
+		// These first few sections were already excluded.
+		// deleted? renamed?
+		'jas',
+		'CloudFlare-UI',
+
+		// forks
+		'circus',
+		'fpm',
+		'phantomjs',
+		'zendesk',
+		'raven-php',
+		'go-raft',
+		'twemcache',
+
+		// forked and deprecated
+		'cfapp-canopy',
+
+		// empty repo (one-line README only)
+		'cloudflarejs',
+
+		// active, but excluded as not of interest
+		'cloudflare.github.io',
+
+		// deprecated, already excluded
+		'instaflare',
+		'dnschanger_detector',
+		'cfapp_sample',
+
+		// The rest are newly tagged as deprecated
+		// Partnerships
+		'Cloudflare-CNAME-flattener',
+		'ModCloudFlareIIS',
+		'Cloudflare-Tools',
+
+		// This is being removed from GitHub entirely
+		'Cloudflare-Plesk',
+
+		// Talks and demos
+		'cf-dnssec-demo-domain-1',
+		'cf-dnssec-demo-domain-2',
+		'gosession2',
+
+		// External site
+		'origin-pull',
+
+		// App Store (the old one)
+		'cf-app',
+
+		// Security
+		'keyless',
+
+		// KyotoTycoon
+		'kyototycoon',
+		'kyotocabinet',
+		'kt_fdw',
+		'gokabinet',
+		'SortaSQL',
+
+		// NGINX & Lua
+		'lua-upstream-cache-nginx-module',
+		'lua-resty-kyototycoon',
+		'lua-resty-limit',  // just a README
+		'ljmm',
+		'luajit-mm',
+
+		// JavaScript
+		'babel-preset-cf',
+		'generator-cf-module',
+		'redox',
+		'transifex-client',
+		'deadorbit',
+		'collapsify',
+
+		// Miscellaneous
+		'spdget',
+		'vpnc-scripts'];
+
+	var includeForks = [
+		'zlib',
+		'lua-cmsgpack'
+	];
+
+	var customRepos = [{
+		name : 'stapxx',
+		html_url : 'http://github.com/agentzh/stapxx',
+		language : 'Perl',
+		description : 'Simple macro language extentions to systemtap'
+	},{
+		name : 'nginx-systemtap-toolkit',
+		html_url : 'http://github.com/agentzh/nginx-systemtap-toolkit',
+		language : 'Perl',
+		description : 'Real-time analyzing and diagnosing tools for Nginx based on SystemTap'
+	},{
+		name : 'lua-nginx-module',
+		html_url : 'https://github.com/chaoslawful/lua-nginx-module',
+		language : 'C',
+		description : 'Embed the Power of Lua into NginX'
+	},{
+		name : 'ngx_cache_purge',
+		html_url : 'https://github.com/FRiCKLE/ngx_cache_purge',
+		language : 'C',
+		description : 'nginx module which adds ability to purge content from FastCGI, proxy, SCGI and uWSGI caches.'
+	}];
+
+	var categories = {
+		'Integrate': {
+			'claire': null,
+			'Cloudflare-CPanel': null,
+			'Cloudflare-Magento': null,
+			'Cloudflare-Pivotal-Cloud-Foundry': null,
+			'Cloudflare-WordPress': null,
+			'mod_cloudflare': null,
+			'cloudflare-plugin-frontend': null,
+			'cloudflare-plugin-backend': null
 		},
-		num = 0;
+		'Automate': {
+			'cloudflare-go': null,
+			'node-cloudflare': null,
+			'python-cloudflare': null,
+			'salt-cloudflare': null,
+			'logsclient': null,
+			'logshare': null,
+			'wafanalyzer': null,
+			'doca': null,
+			'doca-bootstrap-theme': null
+		},
+		'Secure': {
+			'cfssl': null,
+			'sslconfig': null,
+			'redoctober': null,
+			'bpftools': null,
+			'fourq': null,
+			'gokeyless': null,
+			'cfssl_trust': null,
+			'certmgr': null,
+			'tls-tris': null
+		},
+		'Nginx': {
+			'lua-nginx-module' : null,
+			'lua-nginx-cache-module': null,
+			'nginx-systemtap-toolkit': null,
+			'stapxx': null,
+			'ngx_cache_purge': null,
+			'ngx_brotli_module': null,
+			'lua-cmsgpack': null,
+			'lua-aho-corasick': null,
+			'lua-resty-logger-socket' : null,
+			'lua-resty-cookie': null,
+			'lua-resty-json': null
+		},
+		'JavaScript': {
+			'backgridjs.com': null
+		},
+		'Go': {
+			'golibs' : null,
+			'hellogopher': null,
+			'goser': null,
+			'golz4': null
+		},
+		'Other': {}
+	};
+
+	var num = 0;
 
 	function addRecentlyUpdatedRepo(repo) {
 		var $item = $('<li>');
@@ -81,10 +205,15 @@
 		$section.append($('<h2 />',{'class': 'subheadline', 'text': cat}));
 		$container = $('<div class="repos section columns three" />').appendTo($section);
 
+		// The .append(' ') enures a space between the links which allows them
+		// to wrap on a narrow screen.  Previously this sort of worked with breaks
+		// possible within "Nginx and Lua" but nowhere else.  This provides a more
+		// natural behavior.  Given tha larger number of headings, using both
+		// the space and the existing between-link margin works well.
 		$('#category-shortcuts').append($('<a />', {
 			href: '#cat-'+cat,
 			text: cat
-		}))
+		})).append(' ')
 
 		$.each(repos, function(i, repo){
 			if( repo !== null ){
@@ -115,6 +244,10 @@
 				repos = $.grep(repos, function(value) {
 					var keep = exclude.indexOf(value.name) === -1,
 						found = false;
+					if( value.fork && !(value.name in includeForks) ){
+						// ignore most forks.
+						keep = false;
+					}
 
 					// Build up the categories while we're looping through
 					if( keep ){
@@ -123,7 +256,7 @@
 								found = true;
 								items[value.name] = value;
 								return false;
-							}else if( value.language == key || (key === 'Nginx and Lua' && value.language === 'Lua') ){
+							}else if( value.language == key || (key === 'Nginx' && value.language === 'Lua') ){
 								found = true;
 								categories[key][value.name] = value;
 							}
