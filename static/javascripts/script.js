@@ -82,6 +82,7 @@
 		'vpnc-scripts'];
 
 	var includeForks = [
+        'python-cloudflare',
 		'zlib',
 		'lua-cmsgpack'
 	];
