@@ -82,6 +82,7 @@
 		'vpnc-scripts'];
 
 	var includeForks = [
+		'python-cloudflare',
 		'zlib',
 		'lua-cmsgpack'
 	];
@@ -244,7 +245,7 @@
 				repos = $.grep(repos, function(value) {
 					var keep = exclude.indexOf(value.name) === -1,
 						found = false;
-					if( value.fork && !(value.name in includeForks) ){
+					if( value.fork && (includeForks.indexOf(value.name) === -1) ){
 						// ignore most forks.
 						keep = false;
 					}
