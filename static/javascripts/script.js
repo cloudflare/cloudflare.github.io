@@ -307,19 +307,27 @@
 		$item.appendTo('#members');
 	}
 
-	function addMembers(){
-		$.getJSON('https://api.github.com/orgs/cloudflare/members?callback=?', function (result) {
+	function addMembers( count, url ){
+		$.getJSON(url + '&callback=?', function (result) {
 			// API Rate limiting catch
 			if( result.data && result.data.message ){ return; }
 
 			var members = result.data;
-			$('#member-count').text(members.length).removeClass('loading');
+			count += members.length;
+			$('#member-count').text(count).removeClass('loading');
 			$.each( members, function(idx, member){ addMember( member ); });
+
+			$.each(result.meta.Link, function (idx, link) {
+				if (link[1].rel === 'next') {
+					addMembers( count, link[0] )
+					return false; // short-circuit $.each
+				}
+			});
 		});
 	}
 
 	addRepos(customRepos);
-	addMembers();
+	addMembers(0, 'https://api.github.com/orgs/cloudflare/members?page=1');
 
 	$('#activate-mobile-menu').on('click', function( evt ){
 		evt.preventDefault();
