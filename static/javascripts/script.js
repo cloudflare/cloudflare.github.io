@@ -124,6 +124,7 @@
 			'cloudflare-go': null,
 			'node-cloudflare': null,
 			'python-cloudflare': null,
+			'cloudflare-php': null,
 			'salt-cloudflare': null,
 			'logsclient': null,
 			'logshare': null,
