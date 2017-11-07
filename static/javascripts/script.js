@@ -89,12 +89,12 @@
 
 	var customRepos = [{
 		name : 'stapxx',
-		html_url : 'http://github.com/agentzh/stapxx',
+		html_url : 'https://github.com/agentzh/stapxx',
 		language : 'Perl',
 		description : 'Simple macro language extentions to systemtap'
 	},{
 		name : 'nginx-systemtap-toolkit',
-		html_url : 'http://github.com/agentzh/nginx-systemtap-toolkit',
+		html_url : 'https://github.com/agentzh/nginx-systemtap-toolkit',
 		language : 'Perl',
 		description : 'Real-time analyzing and diagnosing tools for Nginx based on SystemTap'
 	},{
