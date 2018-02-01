@@ -2488,6 +2488,9 @@ hr.double,
 .navigation > a.active {
   color: #f38020;
 }
+.navigation .navigation-subbrand {
+  font-weight: bold;
+}
 .navigation > a:first-child {
   padding-left: 2rem;
   padding-top: 1rem;
