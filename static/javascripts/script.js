@@ -129,6 +129,7 @@
 			'logsclient': null,
 			'logshare': null,
 			'wafanalyzer': null,
+			'json-schema-tools': null,
 			'doca': null,
 			'doca-bootstrap-theme': null
 		},
