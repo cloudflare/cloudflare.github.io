@@ -166,6 +166,9 @@
 			'goser': null,
 			'golz4': null
 		},
+		'Rust': {
+			'quiche': null
+		},
 		'Other': {}
 	};
 
