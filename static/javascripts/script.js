@@ -144,19 +144,6 @@
 			'certmgr': null,
 			'tls-tris': null
 		},
-		'Nginx': {
-			'lua-nginx-module' : null,
-			'lua-nginx-cache-module': null,
-			'nginx-systemtap-toolkit': null,
-			'stapxx': null,
-			'ngx_cache_purge': null,
-			'ngx_brotli_module': null,
-			'lua-cmsgpack': null,
-			'lua-aho-corasick': null,
-			'lua-resty-logger-socket' : null,
-			'lua-resty-cookie': null,
-			'lua-resty-json': null
-		},
 		'JavaScript': {
 			'backgridjs.com': null
 		},
